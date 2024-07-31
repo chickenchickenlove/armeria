@@ -441,6 +441,10 @@ abstract class AbstractContextPathServicesBuilder<SELF extends AbstractContextPa
 
     @Nullable
     public SELF before() {
+        if (previousNode == null) {
+            throw new IllegalStateException("No previous node is existed. it may first nodes.");
+        }
+
         return previousNode;
     }
 
@@ -448,7 +452,13 @@ abstract class AbstractContextPathServicesBuilder<SELF extends AbstractContextPa
         final Set<String> compositedPaths = new HashSet<>();
         for (String previousPath : previousContextPaths) {
             for (String contextPath : contextPaths) {
-                compositedPaths.add(previousPath + contextPath);
+                final StringBuilder sb = new StringBuilder();
+                sb.append(previousPath);
+                sb.append(contextPath);
+
+                final String mergedContextPath = sb.toString();
+                RouteUtil.ensureAbsolutePath(mergedContextPath, "mergedContextPath");
+                compositedPaths.add(mergedContextPath);
             }
         }
         return compositedPaths;
