@@ -101,8 +101,11 @@ public final class ContextPathServicesBuilder
         return new ContextPathAnnotatedServiceConfigSetters(this);
     }
 
+    /**
+     * TBD.
+     *
+     */
     public NestedContextPathServicesBuilder nestedContext() {
         return new NestedContextPathServicesBuilder(parent(), virtualHostBuilder(), contextPaths());
     }
-
 }

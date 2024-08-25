@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 LINE Corporation
+ * Copyright 2024 LINE Corporation
  *
  * LINE Corporation licenses this file to you under the Apache License,
  * version 2.0 (the "License"); you may not use this file except in compliance
@@ -16,18 +16,18 @@
 
 package com.linecorp.armeria.server;
 
-import static java.util.Objects.requireNonNull;
-
-import java.util.function.Function;
-
-import com.linecorp.armeria.internal.server.RouteDecoratingService;
-
+/**
+ * TBD.
+ */
 public final class NestedContextPathDecoratingBindingBuilder
         extends AbstractContextPathDecoratingBindingBuilder<NestedContextPathDecoratingBindingBuilder,
         NestedContextPathServicesBuilder> {
 
+    /**
+     * TBD.
+     * @param builder TBD.
+     */
     NestedContextPathDecoratingBindingBuilder(NestedContextPathServicesBuilder builder) {
         super(builder);
     }
-
 }

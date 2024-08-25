@@ -102,6 +102,10 @@ public final class VirtualHostContextPathServicesBuilder
         return new VirtualHostContextPathAnnotatedServiceConfigSetters(this);
     }
 
+    /**
+     * TBD.
+     * @return TBD.
+     */
     public NestedVirtualHostContextPathServicesBuilder nestedContext() {
         return new NestedVirtualHostContextPathServicesBuilder(parent(), virtualHostBuilder(), contextPaths());
     }
