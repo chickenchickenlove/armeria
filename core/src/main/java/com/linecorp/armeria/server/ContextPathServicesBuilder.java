@@ -100,4 +100,9 @@ public final class ContextPathServicesBuilder
     public ContextPathAnnotatedServiceConfigSetters annotatedService() {
         return new ContextPathAnnotatedServiceConfigSetters(this);
     }
+
+    public NestedContextPathServicesBuilder nestedContext() {
+        return new NestedContextPathServicesBuilder(parent(), virtualHostBuilder(), contextPaths());
+    }
+
 }

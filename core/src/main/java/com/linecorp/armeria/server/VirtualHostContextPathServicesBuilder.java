@@ -101,4 +101,8 @@ public final class VirtualHostContextPathServicesBuilder
     public VirtualHostContextPathAnnotatedServiceConfigSetters annotatedService() {
         return new VirtualHostContextPathAnnotatedServiceConfigSetters(this);
     }
+
+    public NestedVirtualHostContextPathServicesBuilder nestedContext() {
+        return new NestedVirtualHostContextPathServicesBuilder(parent(), virtualHostBuilder(), contextPaths());
+    }
 }
