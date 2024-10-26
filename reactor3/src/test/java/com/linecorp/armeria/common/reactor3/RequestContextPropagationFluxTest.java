@@ -22,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
@@ -35,10 +36,13 @@ import org.reactivestreams.Publisher;
 
 import com.linecorp.armeria.client.ClientRequestContext;
 import com.linecorp.armeria.common.RequestContext;
+import com.linecorp.armeria.common.micrometer.context.RequestContextThreadLocalAccessor;
 import com.linecorp.armeria.common.util.SafeCloseable;
 import com.linecorp.armeria.internal.testing.AnticipatedException;
 import com.linecorp.armeria.internal.testing.GenerateNativeImageTrace;
 
+import io.micrometer.context.ContextRegistry;
+import io.micrometer.context.ThreadLocalAccessor;
 import reactor.core.Disposable;
 import reactor.core.publisher.ConnectableFlux;
 import reactor.core.publisher.Flux;
@@ -54,6 +58,9 @@ class RequestContextPropagationFluxTest {
 
     @BeforeAll
     static void setUp() {
+        ContextRegistry
+                .getInstance()
+                .registerThreadLocalAccessor(new RequestContextThreadLocalAccessor());
         Hooks.enableAutomaticContextPropagation();
     }
 

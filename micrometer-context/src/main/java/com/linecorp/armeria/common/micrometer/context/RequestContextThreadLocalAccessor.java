@@ -13,12 +13,13 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-package com.linecorp.armeria.internal.common;
+package com.linecorp.armeria.common.micrometer.context;
 
 import org.reactivestreams.Subscription;
 
 import com.linecorp.armeria.common.RequestContext;
 import com.linecorp.armeria.common.RequestContextStorage;
+import com.linecorp.armeria.internal.common.RequestContextUtil;
 
 import io.micrometer.context.ContextRegistry;
 import io.micrometer.context.ContextSnapshot;
@@ -30,8 +31,8 @@ import io.micrometer.context.ThreadLocalAccessor;
  * <a href="https://docs.micrometer.io/context-propagation/reference/index.html">Micrometer
  * Context Propagation</a> to keep the {@link RequestContext} during
  * <a href="https://github.com/reactor/reactor-core">Reactor</a> operations.
- * Get the {@link RequestContextThreadLocalAccessor} to register it to the {@link ContextRegistry}.
- * Then, {@link ContextRegistry} will use {@link RequestContextThreadLocalAccessor} to
+ * Get the {@link com.linecorp.armeria.internal.common.RequestContextThreadLocalAccessor} to register it to the {@link ContextRegistry}.
+ * Then, {@link ContextRegistry} will use {@link com.linecorp.armeria.internal.common.RequestContextThreadLocalAccessor} to
  * propagate context during the
  * <a href="https://github.com/reactor/reactor-core">Reactor</a> operations
  * so that you can get the context using {@link RequestContext#current()}.
@@ -44,7 +45,7 @@ public final class RequestContextThreadLocalAccessor implements ThreadLocalAcces
     private static final Object KEY = RequestContext.class;
 
     /**
-     * The value which obtained through {@link RequestContextThreadLocalAccessor},
+     * The value which obtained through {@link com.linecorp.armeria.internal.common.RequestContextThreadLocalAccessor},
      * will be stored in the Context under this {@code KEY}.
      * This method will be called by {@link ContextSnapshot} internally.
      */
