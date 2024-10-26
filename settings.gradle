@@ -127,6 +127,7 @@ includeWithFlags ':oauth2',                              'java', 'publish', 'rel
 includeWithFlags ':prometheus1',                         'java', 'publish', 'relocate', 'native'
 includeWithFlags ':protobuf',                            'java', 'publish', 'relocate', 'native'
 includeWithFlags ':reactor3',                            'java', 'publish', 'relocate', 'native'
+includeWithFlags ':micrometer-context',                  'java', 'publish', 'relocate', 'native'
 includeWithFlags ':resilience4j2',                       'java17', 'publish', 'relocate', 'native'
 includeWithFlags ':resteasy',                            'java', 'publish', 'relocate', 'native'
 includeWithFlags ':retrofit2',                           'java', 'publish', 'relocate', 'native'
