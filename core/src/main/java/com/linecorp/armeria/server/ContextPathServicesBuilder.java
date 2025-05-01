@@ -18,6 +18,7 @@ package com.linecorp.armeria.server;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -40,6 +41,12 @@ import com.linecorp.armeria.server.annotation.ResponseConverterFunction;
 @UnstableApi
 public final class ContextPathServicesBuilder
         extends AbstractContextPathServicesBuilder<ContextPathServicesBuilder, ServerBuilder> {
+
+    ContextPathServicesBuilder(ServerBuilder parent, VirtualHostBuilder virtualHostBuilder,
+                               Set<String> contextPaths, Consumer<ContextPathServicesBuilder> context) {
+        this(parent, virtualHostBuilder, contextPaths);
+        context.accept(this);
+    }
 
     ContextPathServicesBuilder(ServerBuilder parent, VirtualHostBuilder virtualHostBuilder,
                                Set<String> contextPaths) {
@@ -101,11 +108,14 @@ public final class ContextPathServicesBuilder
         return new ContextPathAnnotatedServiceConfigSetters(this);
     }
 
-    /**
-     * TBD.
-     *
-     */
-    public NestedContextPathServicesBuilder nestedContext() {
-        return new NestedContextPathServicesBuilder(parent(), virtualHostBuilder(), contextPaths());
+    @Override
+    public ContextPathServicesBuilder contextPaths(Set<String> paths, Consumer<ContextPathServicesBuilder> context) {
+        final ContextPathServicesBuilder child =
+                new ContextPathServicesBuilder(parent(),
+                                               virtualHostBuilder(),
+                                               mergedContextPaths(paths));
+        context.accept(child);
+        return this;
     }
+
 }

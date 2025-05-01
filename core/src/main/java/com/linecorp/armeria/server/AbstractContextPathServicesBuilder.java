@@ -20,7 +20,9 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.linecorp.armeria.server.ServerBuilder.decorate;
 import static java.util.Objects.requireNonNull;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import com.google.common.collect.ImmutableList;
@@ -417,4 +419,24 @@ abstract class AbstractContextPathServicesBuilder<SELF extends AbstractContextPa
     T parent() {
         return parent;
     }
+
+    final Set<String> mergedContextPaths(Set<String> paths) {
+        final Set<String> mergedContextPaths = new HashSet<>();
+        for (String currentContextPath : contextPaths()) {
+            for (String childContextPath : paths) {
+                final String mergedContextPath = currentContextPath + childContextPath;
+                mergedContextPaths.add(mergedContextPath);
+            }
+        }
+        return mergedContextPaths;
+    }
+
+    /**
+     * TBD
+     * @param paths
+     * @param context
+     * @return
+     */
+    public abstract SELF contextPaths(Set<String> paths, Consumer<SELF> context);
+
 }

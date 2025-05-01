@@ -43,6 +43,12 @@ public final class VirtualHostContextPathServicesBuilder
         extends AbstractContextPathServicesBuilder<VirtualHostContextPathServicesBuilder, VirtualHostBuilder> {
 
     VirtualHostContextPathServicesBuilder(VirtualHostBuilder parent, VirtualHostBuilder virtualHostBuilder,
+                                          Set<String> contextPaths, Consumer<VirtualHostContextPathServicesBuilder> context) {
+        this(parent, virtualHostBuilder, contextPaths);
+        context.accept(this);
+    }
+
+    VirtualHostContextPathServicesBuilder(VirtualHostBuilder parent, VirtualHostBuilder virtualHostBuilder,
                                           Set<String> contextPaths) {
         super(parent, virtualHostBuilder, contextPaths);
     }
@@ -102,11 +108,13 @@ public final class VirtualHostContextPathServicesBuilder
         return new VirtualHostContextPathAnnotatedServiceConfigSetters(this);
     }
 
-    /**
-     * TBD.
-     * @return TBD.
-     */
-    public NestedVirtualHostContextPathServicesBuilder nestedContext() {
-        return new NestedVirtualHostContextPathServicesBuilder(parent(), virtualHostBuilder(), contextPaths());
+    @Override
+    public VirtualHostContextPathServicesBuilder contextPaths(Set<String> paths, Consumer<VirtualHostContextPathServicesBuilder> context) {
+        final VirtualHostContextPathServicesBuilder child =
+                new VirtualHostContextPathServicesBuilder(parent(),
+                                               virtualHostBuilder(),
+                                               mergedContextPaths(paths));
+        context.accept(child);
+        return this;
     }
 }
